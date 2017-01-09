@@ -1,5 +1,15 @@
 <html>
   <head><title>My Instagram</title></head>
+  <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
+  <script>
+    $(function() {
+      console.log( "ready!" );
+      console.log(window.location.hash);
+    });
+  </script>
 <body>
   <a href="https://api.instagram.com/oauth/authorize/?client_id=d01385a87fbe47e6bc9c4d1e01db23e1&redirect_uri=https://sinofool.github.io/instagram.html&response_type=token">Login</a>
 </body>
