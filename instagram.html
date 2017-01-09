@@ -7,10 +7,50 @@
   <script>
     $(function() {
       console.log( "ready!" );
-      console.log(window.location.hash);
+      var token = window.location.hash;
+      if (token.substr(0,14) == '#access_token=') {
+        console.log("Good we have token");
+        $("#loginArea").hide();
+        $("#infoArea").show();
+        $("#logoutArea").show();
+        $.ajax({
+          url: "https://api.instagram.com/v1/users/self/?access_token="+token.substr(14),
+          success: function(response){
+            console.log("Here is my info");
+            console.log(response);
+            $("#myName").html(response.data["full_name"]);
+          },
+          dataType: "jsonp"
+        });
+      } else {
+        console.log("We need login");
+        $("#loginArea").show();
+        $("#infoArea").hide();
+        $("#logoutArea").hide();
+      }
     });
   </script>
+  <style>
+    #loginBtn {
+      display: block;
+      color: red;
+    }
+    #infoArea {
+      display: none;
+    }
+    #logoutArea {
+      display: none;
+    }
+  </style>
 <body>
+<div id="loginArea">
   <a href="https://api.instagram.com/oauth/authorize/?client_id=d01385a87fbe47e6bc9c4d1e01db23e1&redirect_uri=https://sinofool.github.io/instagram.html&response_type=token">Login</a>
+</div>
+<div id="infoArea">
+  <div id="myName"></div>
+</div>
+<div id="logoutArea">
+  <a href="instagram.html">Logout</a>
+</div>
 </body>
 </html>
