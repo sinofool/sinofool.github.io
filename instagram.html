@@ -18,7 +18,21 @@
           success: function(response){
             console.log("Here is my info");
             console.log(response);
+            $("#myPic").html("<img src=" + response.data.profile_picture + ">");
             $("#myName").html(response.data["full_name"]);
+            $("#showFollowers").click(function () {
+              $.ajax({
+                url: "https://api.instagram.com/v1/users/self/follows?access_token=" + token.substr(14),
+                success: function (response) {
+                  console.log("Follow list");
+                  console.log(response);
+                  for(let follower of response.data) {
+                    $("#followers").append("<img src=" + follower.profile_picture + "><p>"+follower.full_name+"</p>");
+                  }
+                },
+                dataType: "jsonp"
+              })
+            })
           },
           dataType: "jsonp"
         });
@@ -40,6 +54,12 @@
       display: none;
       float: left;
     }
+    #myInfo {
+      float: left;
+    }
+    #followers {
+      float: right;
+    }
     #logoutArea {
       display: none;
       float: right;
@@ -50,8 +70,15 @@
   <a href="https://api.instagram.com/oauth/authorize/?client_id=d01385a87fbe47e6bc9c4d1e01db23e1&redirect_uri=https://sinofool.github.io/instagram.html&response_type=token&scope=basic+public_content+follower_list+comments+relationships+likes">Login</a>
 </div>
 <div id="infoArea">
-  <div id="myName"></div>
+  <div id="myInfo">
+    <div id="myPic"></div>
+    <div id="myName"></div>
+  </div>
+  <button id="showFollowers">Show who I follows</button>
+  <div id="followers">
+  </div>
 </div>
+
 <div id="logoutArea">
   <a href="instagram.html">Logout</a>
 </div>
