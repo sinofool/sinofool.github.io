@@ -1,0 +1,23 @@
+#loginArea {
+    display: block;
+    color: red;
+    float: right;
+}
+
+#infoArea {
+    display: none;
+    float: left;
+}
+
+#myInfo {
+    float: left;
+}
+
+#followers {
+    float: right;
+}
+
+#logoutArea {
+    display: none;
+    float: right;
+}

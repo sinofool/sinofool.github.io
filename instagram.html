@@ -1,89 +1,28 @@
 <html>
-  <head><title>My Instagram</title></head>
-  <script
-          src="https://code.jquery.com/jquery-3.1.1.min.js"
-          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-          crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-
-    $(function() {
-      console.log( "ready!" );
-      var token = window.location.hash;
-      if (token.substr(0,14) == '#access_token=') {
-        console.log("Good we have token");
-        $("#loginArea").hide();
-        $("#infoArea").show();
-        $("#infoArea").draggable();
-        $("#logoutArea").show();
-        $.ajax({
-          url: "https://api.instagram.com/v1/users/self/?access_token="+token.substr(14),
-          success: function(response){
-            console.log("Here is my info");
-            console.log(response);
-            $("#myPic").html("<img src=" + response.data.profile_picture + ">");
-            $("#myName").html(response.data["full_name"]);
-            $("#showFollowers").click(function () {
-              $.ajax({
-                url: "https://api.instagram.com/v1/users/self/follows?access_token=" + token.substr(14),
-                success: function (response) {
-                  console.log("Follow list");
-                  console.log(response);
-                  for(let follower of response.data) {
-                    $("#followers").append("<img src=" + follower.profile_picture + "><p>"+follower.full_name+"</p>");
-                  }
-                },
-                dataType: "jsonp"
-              })
-            })
-          },
-          dataType: "jsonp"
-        });
-      } else {
-        console.log("We need login");
-        $("#loginArea").show();
-        $("#infoArea").hide();
-        $("#logoutArea").hide();
-      }
-    });
-  </script>
-  <style>
-    #loginArea {
-      display: block;
-      color: red;
-      float: right;
-    }
-    #infoArea {
-      display: none;
-      float: left;
-    }
-    #myInfo {
-      float: left;
-    }
-    #followers {
-      float: right;
-    }
-    #logoutArea {
-      display: none;
-      float: right;
-    }
-  </style>
+<head><title>My Instagram</title></head>
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/instagram_ui.js"></script>
+<script src="js/instagram.js"></script>
+<link type="text/css" rel="css/instagram.css"/>
 <body>
 <div id="loginArea">
-  <a href="https://api.instagram.com/oauth/authorize/?client_id=d01385a87fbe47e6bc9c4d1e01db23e1&redirect_uri=https://sinofool.github.io/instagram.html&response_type=token&scope=basic+public_content+follower_list+comments+relationships+likes">Login</a>
+    <a href="https://api.instagram.com/oauth/authorize/?client_id=d01385a87fbe47e6bc9c4d1e01db23e1&redirect_uri=https://sinofool.github.io/instagram.html&response_type=token&scope=basic+public_content+follower_list+comments+relationships+likes">Login</a>
 </div>
 <div id="infoArea">
-  <div id="myInfo">
-    <div id="myPic"></div>
-    <div id="myName"></div>
-  </div>
-  <button id="showFollowers">Show who I follows</button>
-  <div id="followers">
-  </div>
+    <div id="myInfo">
+
+    </div>
+    <button id="showFollowers">Show who I follows</button>
+    <div id="followers">
+    </div>
 </div>
 
 <div id="logoutArea">
-  <a href="instagram.html">Logout</a>
+    <a href="instagram.html">Logout</a>
 </div>
 </body>
 </html>
